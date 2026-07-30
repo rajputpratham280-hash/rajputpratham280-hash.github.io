@@ -100,6 +100,18 @@
   .about-badges{display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;margin-top:1.8rem;}
   .about-badge{border:1px solid rgba(201,162,75,0.35);color:var(--gold);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.45rem 1rem;}
 
+  /* CAMPUS GALLERY */
+  #gallery{padding:2rem 3rem 5rem;max-width:1300px;margin:0 auto;}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.9rem;margin-top:3rem;}
+  .gallery-item{background:var(--card);aspect-ratio:4/3;overflow:hidden;position:relative;border:1px solid rgba(201,162,75,0.15);}
+  .gallery-item:first-child{grid-column:span 2;grid-row:span 2;}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;display:none;}
+  .gallery-item img.loaded{display:block;}
+  .gallery-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;color:var(--muted);font-size:2rem;text-align:center;}
+  .gallery-placeholder span{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;max-width:150px;line-height:1.6;}
+  .gallery-hint{text-align:center;margin-top:1.2rem;font-size:0.78rem;color:var(--muted);font-style:italic;}
+  @media (max-width:700px){.gallery-grid{grid-template-columns:1fr 1fr;}.gallery-item:first-child{grid-column:span 2;grid-row:span 1;}}
+
   /* COURSES */
   #courses{padding:2rem 3rem 5rem;max-width:1300px;margin:0 auto;}
   .courses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4px;margin-top:3rem;border:1px solid rgba(201,162,75,0.15);}
@@ -205,6 +217,7 @@
   </div>
   <ul class="nav-links">
     <li><a href="#about-college">About</a></li>
+    <li><a href="#gallery">Campus</a></li>
     <li><a href="#courses">Courses</a></li>
     <li><a href="#leadership">Leadership</a></li>
     <li><a href="#notice">Notice Board</a></li>
@@ -221,7 +234,7 @@
   <div class="hero-slide" style="background:linear-gradient(135deg,#1a3a63,#0b1f3a);"></div>
   <div class="hero-content">
     <div class="hero-photo" id="hero-photo">
-      <<img id="hero-photo-img" src="college.jpg" alt="Bhai Mati Dass College">">
+      <img id="hero-photo-img" src="" alt="Bhai Mati Dass College">
       <div class="hero-photo-placeholder" id="hero-photo-placeholder">📷<span>Add College Photo</span></div>
     </div>
     <div class="hero-eyebrow">Est. In Service of Healing</div>
@@ -248,6 +261,24 @@
     <div class="about-badge">Scholarships Available</div>
     <div class="about-badge">Placement Support</div>
   </div>
+</section>
+
+<!-- CAMPUS GALLERY -->
+<div class="section-label reveal">
+  <div class="eyebrow">Campus Life</div>
+  <h2>Our Campus & Facilities</h2>
+  <p>A look inside the labs, classrooms and moments that shape student life at the college.</p>
+</div>
+<section id="gallery">
+  <div class="gallery-grid" id="gallery-grid">
+    <div class="gallery-item reveal"><img id="gallery-img-1" src="" alt="Campus photo 1"><div class="gallery-placeholder" id="gallery-ph-1">🏛️<span>Main Building</span></div></div>
+    <div class="gallery-item reveal"><img id="gallery-img-2" src="" alt="Campus photo 2"><div class="gallery-placeholder" id="gallery-ph-2">🔬<span>Skill Lab</span></div></div>
+    <div class="gallery-item reveal"><img id="gallery-img-3" src="" alt="Campus photo 3"><div class="gallery-placeholder" id="gallery-ph-3">📚<span>Library</span></div></div>
+    <div class="gallery-item reveal"><img id="gallery-img-4" src="" alt="Campus photo 4"><div class="gallery-placeholder" id="gallery-ph-4">🩺<span>Nursing Lab</span></div></div>
+    <div class="gallery-item reveal"><img id="gallery-img-5" src="" alt="Campus photo 5"><div class="gallery-placeholder" id="gallery-ph-5">🎓<span>College Event</span></div></div>
+    <div class="gallery-item reveal"><img id="gallery-img-6" src="" alt="Campus photo 6"><div class="gallery-placeholder" id="gallery-ph-6">🌿<span>Campus Grounds</span></div></div>
+  </div>
+  <p class="gallery-hint">Edit the code to add real photos of labs, buildings, and events — see instructions below.</p>
 </section>
 
 <!-- COURSES -->
@@ -464,6 +495,7 @@
   <div class="footer-logo">Bhai Mati Dass College of Nursing & Ayurved</div>
   <div class="footer-links">
     <a href="#about-college">About</a>
+    <a href="#gallery">Campus</a>
     <a href="#courses">Courses</a>
     <a href="#leadership">Leadership</a>
     <a href="#notice">Notice Board</a>
@@ -482,6 +514,18 @@
     if (img && img.getAttribute('src') && img.getAttribute('src').trim() !== '') {
       img.classList.add('loaded');
       if (placeholder) placeholder.style.display = 'none';
+    }
+  })();
+
+  // Show campus gallery photos automatically once a src is added; otherwise keep placeholders
+  (function(){
+    for (let i = 1; i <= 6; i++) {
+      const img = document.getElementById('gallery-img-' + i);
+      const ph = document.getElementById('gallery-ph-' + i);
+      if (img && img.getAttribute('src') && img.getAttribute('src').trim() !== '') {
+        img.classList.add('loaded');
+        if (ph) ph.style.display = 'none';
+      }
     }
   })();
 
