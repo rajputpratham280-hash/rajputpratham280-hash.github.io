@@ -108,17 +108,125 @@
   .about-badges{display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;margin-top:1.8rem;}
   .about-badge{border:1px solid rgba(201,162,75,0.35);color:var(--gold);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.45rem 1rem;}
 
-  /* CAMPUS GALLERY */
-  #gallery{padding:2rem 3rem 5rem;max-width:1300px;margin:0 auto;}
-  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.9rem;margin-top:3rem;}
-  .gallery-item{background:var(--card);aspect-ratio:4/3;overflow:hidden;position:relative;border:1px solid rgba(201,162,75,0.15);}
-  .gallery-item:first-child{grid-column:span 2;grid-row:span 2;}
-  .gallery-item img{width:100%;height:100%;object-fit:cover;display:none;}
-  .gallery-item img.loaded{display:block;}
-  .gallery-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;color:var(--muted);font-size:2rem;text-align:center;}
-  .gallery-placeholder span{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;max-width:150px;line-height:1.6;}
-  .gallery-hint{text-align:center;margin-top:1.2rem;font-size:0.78rem;color:var(--muted);font-style:italic;}
-  @media (max-width:700px){.gallery-grid{grid-template-columns:1fr 1fr;}.gallery-item:first-child{grid-column:span 2;grid-row:span 1;}}
+  /* CAMPUS PHOTO LIBRARY */
+  #gallery{
+    max-width:1300px;margin:0 auto 5rem;padding:0 clamp(1rem,4vw,3rem);
+    scroll-margin-top:6rem;
+  }
+  .gallery-library{
+    padding:clamp(1.25rem,4.5vw,3.8rem);
+    border:1px solid rgba(232,200,119,.24);border-radius:24px;
+    background:radial-gradient(ellipse at top left,#192f4a 0%,transparent 64%),#0b192b;
+    box-shadow:0 24px 60px rgba(0,0,0,.25);
+  }
+  .gallery-heading{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;
+    padding-bottom:1.6rem;border-bottom:1px solid rgba(232,200,119,.2);
+  }
+  .gallery-kicker{
+    color:var(--gold-light);font-size:.68rem;font-weight:700;
+    letter-spacing:.21em;text-transform:uppercase;
+  }
+  .gallery-heading h2{
+    font-family:'Cinzel',Georgia,serif;font-size:clamp(1.7rem,4vw,3.25rem);
+    line-height:1.15;margin:.55rem 0 .6rem;
+  }
+  .gallery-heading p:last-child{color:#c2cbd4;font-size:.9rem;line-height:1.6;}
+  .gallery-totals{display:flex;gap:1.5rem;flex:none;}
+  .gallery-totals div{display:grid;gap:.25rem;}
+  .gallery-totals dt{color:#b9c4ce;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;}
+  .gallery-totals dd{color:var(--gold-light);font-family:'Cinzel',Georgia,serif;font-size:1.6rem;line-height:1;grid-row:1;}
+  .gallery-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.25rem 0 1.7rem;}
+  .gallery-filter,.gallery-viewer button{
+    border:1px solid #536174;background:#14253a;color:var(--cream);font:inherit;cursor:pointer;
+  }
+  .gallery-filter{padding:.55rem .9rem;border-radius:999px;font-size:.76rem;}
+  .gallery-filter:hover,.gallery-viewer button:hover:not(:disabled){border-color:var(--gold-light);}
+  .gallery-filter[aria-pressed="true"]{background:var(--gold-light);border-color:var(--gold-light);color:var(--navy-deep);}
+  #gallery button:focus-visible{outline:2px solid var(--gold-light);outline-offset:4px;}
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:1.6rem 1.15rem;align-items:stretch;
+  }
+  .gallery-album{
+    --album-light:#31515b;--album-dark:#162b35;
+    position:relative;display:flex;flex-direction:column;min-width:0;
+    text-align:left;color:var(--cream);font:inherit;cursor:pointer;
+    background:#111f31;border:1px solid #435268;border-radius:12px;padding:.65rem;
+    box-shadow:0 5px 0 -2px #2c3a4c,0 10px 0 -4px #465469,0 16px 20px -10px #010a16;
+    transform-origin:center bottom;
+    transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease;
+  }
+  .gallery-album[hidden]{display:none;}
+  .gallery-album[data-album="learning"]{--album-light:#494c70;--album-dark:#252a46;}
+  .gallery-album[data-album="labs"]{--album-light:#385b4f;--album-dark:#203b36;}
+  .gallery-album[data-album="events"]{--album-light:#6f3d54;--album-dark:#392539;}
+  @media (hover:hover) and (prefers-reduced-motion:no-preference){
+    .gallery-album:hover{
+      transform:perspective(850px) translateY(-7px) rotateX(5deg);
+      border-color:var(--gold-light);box-shadow:0 6px 0 -2px #435166,0 12px 0 -4px #5d6676,0 26px 28px -12px #010a16;
+    }
+  }
+  .gallery-cover{
+    position:relative;isolation:isolate;display:grid;place-items:center;overflow:hidden;
+    width:100%;aspect-ratio:4/3;border-radius:6px;
+    background:repeating-linear-gradient(135deg,transparent 0 8px,rgba(255,255,255,.035) 8px 9px),
+      radial-gradient(ellipse at top,var(--album-light),var(--album-dark));
+  }
+  .gallery-cover::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 -40px 40px -28px rgba(0,0,0,.65);
+  }
+  .gallery-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:0;}
+  .gallery-cover img.is-ready{opacity:1;}
+  .gallery-viewer img[hidden]{display:none;}
+  .gallery-cover-icon{
+    display:grid;place-items:center;width:3.5rem;height:3.5rem;color:#f0d493;
+    border:1px solid rgba(240,212,147,.45);border-radius:50%;
+    background:rgba(9,20,32,.38);
+  }
+  .gallery-cover-icon svg{width:1.65rem;height:1.65rem;}
+  .gallery-number{
+    position:absolute;z-index:2;left:.5rem;top:.5rem;
+    color:#fff0cf;background:rgba(7,21,39,.88);border-radius:4px;padding:.25rem .42rem;
+    font-size:.64rem;letter-spacing:.08em;font-variant-numeric:tabular-nums;
+  }
+  .gallery-album-title{
+    display:block;margin:.8rem .15rem .3rem;
+    font-family:'Cinzel',Georgia,serif;font-weight:700;font-size:1rem;line-height:1.3;
+  }
+  .gallery-album-desc{display:block;color:#c2cbd4;font-size:.77rem;line-height:1.5;margin:0 .15rem .8rem;}
+  .gallery-album-footer{
+    display:flex;justify-content:space-between;align-items:center;gap:.4rem;
+    margin:auto .15rem 0;padding:.55rem 0 .1rem;border-top:1px solid rgba(232,200,119,.18);
+    color:var(--gold-light);font-size:.72rem;
+  }
+  .gallery-album-footer span:last-child{font-size:1.1rem;line-height:1;}
+  .gallery-viewer{
+    position:fixed;inset:0;margin:auto;padding:0;width:min(850px,calc(100% - 1.5rem));max-height:90dvh;
+    overflow:auto;overscroll-behavior:contain;color:var(--cream);background:#101f31;
+    border:1px solid #766343;border-radius:16px;box-shadow:0 18px 60px rgba(0,0,0,.7);
+  }
+  .gallery-viewer::backdrop{background:rgba(3,10,18,.86);}
+  .gallery-viewer-head,.gallery-viewer-footer{
+    display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.8rem 1rem;
+  }
+  .gallery-viewer-head h3{font-family:'Cinzel',Georgia,serif;font-size:clamp(1.05rem,3vw,1.5rem);}
+  .gallery-viewer button{min-width:2.75rem;min-height:2.75rem;padding:.4rem .65rem;border-radius:7px;font-size:.83rem;}
+  .gallery-viewer button:disabled{opacity:.45;cursor:default;}
+  .gallery-viewer-frame{display:grid;place-items:center;background:#081321;min-height:8rem;}
+  .gallery-viewer-frame img{display:block;width:100%;height:min(55vh,540px);object-fit:contain;}
+  .gallery-viewer-frame p{padding:1rem;color:#c2cbd4;text-align:center;}
+  .gallery-viewer-caption{padding:.8rem 1rem 0;color:#e0e7ed;text-align:center;font-size:.88rem;}
+  .gallery-viewer-count{color:var(--gold-light);font-size:.8rem;font-variant-numeric:tabular-nums;}
+  @media (max-width:950px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media (max-width:620px){
+    #gallery{margin-bottom:3.5rem;}
+    .gallery-heading{align-items:flex-start;flex-direction:column;gap:1rem;}
+    .gallery-grid{gap:1.1rem .75rem;}
+  }
+  @media (max-width:400px){.gallery-grid{grid-template-columns:minmax(0,1fr);}}
+  @media (prefers-reduced-motion:reduce){.gallery-album{transition:none;}}
 
   /* COURSES */
   #courses{padding:2rem 3rem 5rem;max-width:1300px;margin:0 auto;}
@@ -336,22 +444,58 @@
   </div>
 </section>
 
-<!-- CAMPUS GALLERY -->
-<div class="section-label reveal">
-  <div class="eyebrow">Campus Life</div>
-  <h2>Our Campus & Facilities</h2>
-  <p>A look inside the labs, classrooms and moments that shape student life at the college.</p>
-</div>
-<section id="gallery">
-  <div class="gallery-grid" id="gallery-grid">
-    <div class="gallery-item reveal"><img id="gallery-img-1" src="images/main-building.jpg" alt="Campus photo 1"><div class="gallery-placeholder" id="gallery-ph-1">🏛️<span>Main Building</span></div></div>
-    <div class="gallery-item reveal"><img id="gallery-img-2" src="images/skill-lab.jpeg" alt="Campus photo 2"><div class="gallery-placeholder" id="gallery-ph-2">🔬<span>Skill Lab</span></div></div>
-    <div class="gallery-item reveal"><img id="gallery-img-3" src="images/classroom.jpeg" alt="Campus photo 3"><div class="gallery-placeholder" id="gallery-ph-3">📚<span>Classroom</span></div></div>
-    <div class="gallery-item reveal"><img id="gallery-img-4" src="" alt="Campus photo 4"><div class="gallery-placeholder" id="gallery-ph-4">🩺<span>Nursing Lab</span></div></div>
-    <div class="gallery-item reveal"><img id="gallery-img-5" src="images/college-event.jpeg" alt="Campus photo 5"><div class="gallery-placeholder" id="gallery-ph-5">🎓<span>College Event</span></div></div>
-    <div class="gallery-item reveal"><img id="gallery-img-6" src="" alt="Campus photo 6"><div class="gallery-placeholder" id="gallery-ph-6">🌿<span>Campus Grounds</span></div></div>
+<!-- CAMPUS PHOTO LIBRARY -->
+<section id="gallery" aria-labelledby="gallery-title">
+  <div class="gallery-library">
+    <header class="gallery-heading">
+      <div>
+        <p class="gallery-kicker">Bhai Mati Dass College · Campus Life</p>
+        <h2 id="gallery-title">Campus Photo Library</h2>
+        <p>Browse the spaces, practical training and events that shape life at the college.</p>
+      </div>
+      <dl class="gallery-totals">
+        <div><dt>Albums</dt><dd id="gallery-album-total">0</dd></div>
+        <div><dt>Photos</dt><dd id="gallery-photo-total">0</dd></div>
+      </dl>
+    </header>
+    <div class="gallery-filters" id="gallery-filters" role="group" aria-label="Filter photo albums"></div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+    <noscript><p>Enable JavaScript to browse the campus photo albums.</p></noscript>
   </div>
-  
+  <template id="gallery-album-template">
+    <button class="gallery-album" type="button" aria-haspopup="dialog">
+      <span class="gallery-cover" aria-hidden="true">
+        <span class="gallery-cover-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path/>
+          </svg>
+        </span>
+        <img alt="" loading="lazy" decoding="async">
+        <span class="gallery-number"></span>
+      </span>
+      <span class="gallery-album-title"></span>
+      <span class="gallery-album-desc"></span>
+      <span class="gallery-album-footer"><span></span><span aria-hidden="true">↗</span></span>
+    </button>
+  </template>
+  <dialog class="gallery-viewer" id="gallery-viewer" aria-labelledby="gallery-viewer-title">
+    <header class="gallery-viewer-head">
+      <h3 id="gallery-viewer-title"></h3>
+      <form method="dialog"><button type="submit" autofocus>Close</button></form>
+    </header>
+    <figure>
+      <div class="gallery-viewer-frame" aria-busy="false">
+        <img alt="" hidden>
+        <p hidden></p>
+      </div>
+      <figcaption class="gallery-viewer-caption" aria-live="polite"></figcaption>
+    </figure>
+    <div class="gallery-viewer-footer">
+      <button type="button" id="gallery-previous">← Previous</button>
+      <span class="gallery-viewer-count" aria-live="polite"></span>
+      <button type="button" id="gallery-next">Next →</button>
+    </div>
+  </dialog>
 </section>
 
 <!-- COURSES -->
@@ -581,16 +725,169 @@
 </footer>
 
 <script>
-  // Show campus gallery photos automatically once a src is added; otherwise keep placeholders
-  (function(){
-    for (let i = 1; i <= 6; i++) {
-      const img = document.getElementById('gallery-img-' + i);
-      const ph = document.getElementById('gallery-ph-' + i);
-      if (img && img.getAttribute('src') && img.getAttribute('src').trim() !== '') {
-        img.classList.add('loaded');
-        if (ph) ph.style.display = 'none';
+  // CAMPUS PHOTO LIBRARY — ADD PHOTOS HERE
+  // Upload new image files to the website's images folder, then add one line
+  // inside the matching album's photos array. The first photo is its cover.
+  // Example: { src: 'images/nursing-lab.jpg', caption: 'Nursing Lab' },
+  (() => {
+    const albums = [
+      {
+        id: 'campus',
+        title: 'Campus & Grounds',
+        description: 'Buildings and outdoor spaces',
+        icon: 'M3 9h18M5 9v10m5-10v10m4-10v10m5-10v10M3 20h18M3 8l9-5 9 5z',
+        photos: [
+          { src: 'images/main-building.jpg', caption: 'Main College Building' },
+        ],
+      },
+      {
+        id: 'learning',
+        title: 'Learning Spaces',
+        description: 'Classrooms and study areas',
+        icon: 'M12 6c-2-2-5-3-9-2v15c4-1 7 0 9 2 2-2 5-3 9-2V4c-4-1-7 0-9 2zm0 0v15',
+        photos: [
+          { src: 'images/classroom.jpeg', caption: 'College Classroom' },
+        ],
+      },
+      {
+        id: 'labs',
+        title: 'Labs & Skills',
+        description: 'Labs and hands-on training',
+        icon: 'M9 3h6m-5 0v7l-5 8a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-8V3M8 14h8',
+        photos: [
+          { src: 'images/skill-lab.jpeg', caption: 'Skill Lab' },
+        ],
+      },
+      {
+        id: 'events',
+        title: 'College Events',
+        description: 'Celebrations and student life',
+        icon: 'M4 7h16v13H4zM4 11h16M8 4v5m8-5v5m-5 7h2',
+        photos: [
+          { src: 'images/college-event.jpeg', caption: 'College Event' },
+        ],
+      },
+    ];
+
+    const filters = document.getElementById('gallery-filters');
+    const grid = document.getElementById('gallery-grid');
+    const template = document.getElementById('gallery-album-template');
+    const viewer = document.getElementById('gallery-viewer');
+    const title = document.getElementById('gallery-viewer-title');
+    const frame = viewer.querySelector('.gallery-viewer-frame');
+    const status = frame.querySelector('p');
+    const caption = viewer.querySelector('figcaption');
+    const count = viewer.querySelector('.gallery-viewer-count');
+    const previous = document.getElementById('gallery-previous');
+    const next = document.getElementById('gallery-next');
+    const formatTotal = total => String(total).padStart(2, '0');
+    let activeAlbum;
+    let photoIndex = 0;
+    let opener;
+
+    document.getElementById('gallery-album-total').textContent = formatTotal(albums.length);
+    document.getElementById('gallery-photo-total').textContent =
+      formatTotal(albums.reduce((total, album) => total + album.photos.length, 0));
+
+    const cards = albums.map((album, index) => {
+      const card = template.content.firstElementChild.cloneNode(true);
+      const cover = card.querySelector('img');
+      card.dataset.album = album.id;
+      card.querySelector('.gallery-cover-icon path').setAttribute('d', album.icon);
+      card.querySelector('.gallery-number').textContent = formatTotal(index + 1);
+      card.querySelector('.gallery-album-title').textContent = album.title;
+      card.querySelector('.gallery-album-desc').textContent = album.description;
+      card.querySelector('.gallery-album-footer span').textContent =
+        album.photos.length === 1 ? '1 photo' : album.photos.length + ' photos';
+
+      if (album.photos.length) {
+        cover.addEventListener('load', () => cover.classList.add('is-ready'), { once: true });
+        cover.src = album.photos[0].src;
       }
+
+      card.addEventListener('click', () => {
+        opener = card;
+        activeAlbum = album;
+        photoIndex = 0;
+        title.textContent = album.title;
+        showPhoto();
+        viewer.showModal();
+      });
+      grid.append(card);
+      return card;
+    });
+
+    const filterChoices = [{ id: 'all', title: 'All albums' }, ...albums];
+    const filterButtons = filterChoices.map(choice => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'gallery-filter';
+      button.textContent = choice.title;
+      button.setAttribute('aria-pressed', String(choice.id === 'all'));
+      button.setAttribute('aria-controls', 'gallery-grid');
+      button.addEventListener('click', () => {
+        filterButtons.forEach(filter => filter.setAttribute('aria-pressed', String(filter === button)));
+        cards.forEach(card => {
+          card.hidden = choice.id !== 'all' && card.dataset.album !== choice.id;
+        });
+      });
+      filters.append(button);
+      return button;
+    });
+
+    function showPhoto() {
+      const photos = activeAlbum.photos;
+      const photo = photos[photoIndex];
+      const image = new Image();
+      image.hidden = true;
+      frame.querySelector('img').replaceWith(image);
+      frame.setAttribute('aria-busy', String(Boolean(photo)));
+      status.hidden = false;
+      status.textContent = photo ? 'Loading photo…' : 'Photos will be added to this album.';
+      caption.textContent = photo?.caption ?? '';
+      caption.hidden = !photo;
+      count.textContent = photos.length ? (photoIndex + 1) + ' / ' + photos.length : '0 photos';
+      previous.disabled = next.disabled = photos.length < 2;
+
+      if (!photo) return;
+
+      image.alt = photo.alt || photo.caption;
+      image.addEventListener('load', () => {
+        if (!frame.contains(image)) return;
+        image.hidden = false;
+        status.hidden = true;
+        frame.setAttribute('aria-busy', 'false');
+      }, { once: true });
+      image.addEventListener('error', () => {
+        if (!frame.contains(image)) return;
+        status.textContent = 'This photo is currently unavailable.';
+        frame.setAttribute('aria-busy', 'false');
+      }, { once: true });
+      image.src = photo.src;
     }
+
+    function movePhoto(direction) {
+      const total = activeAlbum.photos.length;
+      if (total < 2) return;
+      photoIndex = (photoIndex + direction + total) % total;
+      showPhoto();
+    }
+
+    previous.addEventListener('click', () => movePhoto(-1));
+    next.addEventListener('click', () => movePhoto(1));
+    viewer.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        movePhoto(event.key === 'ArrowLeft' ? -1 : 1);
+      }
+    });
+    viewer.addEventListener('click', event => {
+      if (event.target !== viewer) return;
+      const rect = viewer.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right ||
+          event.clientY < rect.top || event.clientY > rect.bottom) viewer.close();
+    });
+    viewer.addEventListener('close', () => opener?.focus());
   })();
 
   // Hero slide rotation every 10 seconds
