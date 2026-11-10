@@ -258,15 +258,56 @@
   .leader-bio + .leader-bio{margin-top:.7rem;}
   @media (max-width:700px){.leadership-inner{grid-template-columns:minmax(0,1fr);}}
 
-  /* NOTICE BOARD */
-  #notice{padding:2rem 3rem 5rem;max-width:1000px;margin:0 auto;}
-  .notice-board{border:1px solid rgba(201,162,75,0.25);background:var(--card);}
-  .notice-item{display:flex;gap:1.4rem;padding:1.3rem 1.6rem;border-bottom:1px solid rgba(201,162,75,0.12);align-items:flex-start;}
-  .notice-item:last-child{border-bottom:none;}
-  .notice-date{flex-shrink:0;width:80px;font-family:'Cinzel',serif;font-size:0.75rem;color:var(--gold);letter-spacing:0.05em;}
-  .notice-text{font-size:0.88rem;color:var(--muted);line-height:1.7;}
-  .notice-text strong{color:var(--cream);}
-  .notice-hint{text-align:center;margin-top:1rem;font-size:0.78rem;color:var(--muted);font-style:italic;}
+  /* CAMPUS INFORMATION DESK */
+  #notice{max-width:1196px;margin:0 auto 3rem;padding:1rem 3rem 2rem;scroll-margin-top:5rem;}
+  .campus-desk{
+    padding:clamp(1.1rem,4vw,2.8rem);border:1px solid rgba(232,200,119,.27);border-radius:18px;
+    background:radial-gradient(ellipse at top left,#4b263b,transparent 68%),#101e30;
+    box-shadow:0 20px 48px rgba(0,0,0,.24);
+  }
+  .campus-desk-heading{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:1.25rem 2rem;flex-wrap:wrap;
+    padding-bottom:1.25rem;border-bottom:1px solid rgba(232,200,119,.24);
+  }
+  .campus-desk-kicker{
+    color:var(--gold-light);font-size:.68rem;letter-spacing:.17em;text-transform:uppercase;font-weight:700;
+  }
+  .campus-desk-heading h2{
+    margin-top:.5rem;font-family:'Cinzel',Georgia,serif;font-size:clamp(1.45rem,3.7vw,2.7rem);line-height:1.15;
+  }
+  .campus-desk-heading > p{max-width:20rem;color:#d8d5df;font-size:.86rem;line-height:1.65;}
+  .campus-desk-links{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;
+    list-style:none;margin-top:1rem;
+  }
+  .campus-desk-links li{display:flex;min-width:0;}
+  .campus-desk-link{
+    display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;width:100%;
+    padding:1rem;color:var(--cream);background:#142338;text-decoration:none;
+    border:1px solid #45536a;border-radius:10px;transition:border-color .2s ease,background-color .2s ease;
+  }
+  .campus-desk-visit-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .8rem;margin-top:auto;}
+  .campus-desk-visit-actions .campus-desk-action{margin-top:0;padding-top:0;}
+  .campus-desk-visit-actions a:focus-visible,.campus-map-button:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px;}
+  .campus-desk-link:hover,.campus-desk-link:focus-within{border-color:var(--gold-light);background:#1b2c44;}
+  .campus-desk-link:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px;}
+  .campus-desk-icon{
+    display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:8px;
+    color:var(--gold-light);background:#242638;border:1px solid rgba(232,200,119,.3);
+  }
+  .campus-desk-icon svg{width:1.15rem;height:1.15rem;}
+  .campus-desk-link h3{font-family:'Cinzel',Georgia,serif;font-size:.96rem;line-height:1.35;}
+  .campus-desk-link p{color:#c5ced8;font-size:.79rem;line-height:1.6;}
+  .campus-desk-action{margin-top:auto;padding-top:.15rem;color:var(--gold-light);font-size:.76rem;font-weight:600;}
+  .campus-announcement{
+    margin-top:1rem;padding:.95rem 1rem;background:#321f31;
+    border:1px solid rgba(232,200,119,.38);border-left:4px solid var(--gold);border-radius:8px;
+  }
+  .campus-announcement[hidden]{display:none;}
+  .campus-announcement h3{margin:.35rem 0;font-family:'Cinzel',Georgia,serif;font-size:1rem;line-height:1.4;}
+  .campus-announcement p:last-child{color:#e0dbe0;font-size:.85rem;line-height:1.65;}
+  @media (max-width:760px){.campus-desk-links{grid-template-columns:minmax(0,1fr);}}
+  @media (prefers-reduced-motion:reduce){.campus-desk-link{transition:none;}}
 
   /* ALUMNI BOARD */
   #alumni{padding:1rem 3rem 5rem;scroll-margin-top:5rem;}
@@ -322,6 +363,14 @@
   .info-text{font-size:0.86rem;color:var(--muted);line-height:1.7;}
   .info-text strong{color:var(--cream);display:block;font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.2rem;}
   .info-blank{color:var(--gold-light);font-style:italic;}
+  .campus-map-button{
+    display:inline-flex;align-items:center;justify-content:center;gap:.3rem;min-height:2.75rem;
+    padding:.45rem .72rem;border:1px solid var(--gold);border-radius:6px;
+    background:var(--gold-light);color:var(--navy-deep);font-size:.76rem;font-weight:700;text-decoration:none;
+  }
+  .campus-map-button:hover{background:var(--cream);}
+  .info-text .campus-map-button{margin-top:.65rem;}
+  .campus-address{font-style:normal;}
   .query-form{display:flex;flex-direction:column;gap:1.1rem;}
   .query-form h3{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);margin-bottom:0.3rem;}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
@@ -433,7 +482,7 @@
     <li><a href="#gallery">Campus</a></li>
     <li><a href="#courses">Courses</a></li>
     <li><a href="#leadership">Leadership</a></li>
-    <li><a href="#notice">Notice Board</a></li>
+    <li><a href="#notice">Information Desk</a></li>
     <li><a href="#alumni">Alumni</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -649,27 +698,67 @@
   </div>
 </section>
 
-<!-- NOTICE BOARD -->
-<div class="section-label reveal">
-  <div class="eyebrow">Stay Informed</div>
-  <h2>Notice Board</h2>
-</div>
-<section id="notice" class="reveal">
-  <div class="notice-board">
-    <div class="notice-item">
-      <div class="notice-date">[Date]</div>
-      <div class="notice-text"><strong>[Notice Title]</strong> — [Add notice details here. Replace with real admissions, exam, or event notices.]</div>
-    </div>
-    <div class="notice-item">
-      <div class="notice-date">[Date]</div>
-      <div class="notice-text"><strong>[Notice Title]</strong> — [Add notice details here.]</div>
-    </div>
-    <div class="notice-item">
-      <div class="notice-date">[Date]</div>
-      <div class="notice-text"><strong>[Notice Title]</strong> — [Add notice details here.]</div>
-    </div>
+<!-- CAMPUS INFORMATION DESK -->
+<section id="notice" aria-labelledby="campus-desk-title">
+  <div class="campus-desk">
+    <header class="campus-desk-heading">
+      <div>
+        <p class="campus-desk-kicker">Bhai Mati Dass College</p>
+        <h2 id="campus-desk-title">Campus Information Desk</h2>
+      </div>
+      <p>Find your next step, whether you’re applying, planning a visit or looking for student support.</p>
+    </header>
+
+    <!-- POST A NOTICE HERE: update the title and message below, then remove the word "hidden"
+         from the opening article tag. Add "hidden" back when the notice expires. -->
+    <article class="campus-announcement" hidden>
+      <p class="campus-desk-kicker">College Announcement</p>
+      <h3>Enter your notice title here</h3>
+      <p>Write your notice here. Include any relevant date, deadline and action students should take.</p>
+    </article>
+
+    <ul class="campus-desk-links">
+      <li>
+        <a class="campus-desk-link" href="#courses">
+          <span class="campus-desk-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 6c-2.5-2-5.5-2.5-9-2v15c3.5-.5 6.5 0 9 2 2.5-2 5.5-2.5 9-2V4c-3.5-.5-6.5 0-9 2Zm0 0v15"/>
+            </svg>
+          </span>
+          <h3>Admissions &amp; Programmes</h3>
+          <p>Compare programmes, then check current intake dates, eligibility and application documents with the college office.</p>
+          <span class="campus-desk-action">Browse programmes <span aria-hidden="true">↗</span></span>
+        </a>
+      </li>
+      <li>
+        <div class="campus-desk-link">
+          <span class="campus-desk-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 10c0 5-7 10-7 10s-7-5-7-10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.2"/>
+            </svg>
+          </span>
+          <h3>Plan a Campus Visit</h3>
+          <p>Find our campus in Village Atta, Goraya. Contact the college office to confirm visiting hours before travelling.</p>
+          <div class="campus-desk-visit-actions">
+            <a class="campus-map-button" href="https://maps.app.goo.gl/aAQnYnyqNoKvbubM6">Open in Google Maps <span aria-hidden="true">↗</span></a>
+            <a class="campus-desk-action" href="#gallery">Campus photos</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a class="campus-desk-link" href="#contact">
+          <span class="campus-desk-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5h16v11H9l-5 4V5Z M8 9h8m-8 3h5"/>
+            </svg>
+          </span>
+          <h3>Student Support</h3>
+          <p>Contact the college office for questions about exam schedules, fee receipts, scholarship forms or other student records.</p>
+          <span class="campus-desk-action">Contact the office <span aria-hidden="true">↗</span></span>
+        </a>
+      </li>
+    </ul>
   </div>
-  <p class="notice-hint">.</p>
 </section>
 
 <!-- ALUMNI -->
@@ -715,7 +804,11 @@
       <h3>Find Us</h3>
       <div class="info-item">
         <span class="info-icon">📍</span>
-        <div class="info-text"><strong>Address</strong><span class="info-blank">[Bhai Mati Dass College Of Nursing Village Atta, Canal Road, Goraya,Jalandhar,Punjab 144409]</span></div>
+        <div class="info-text">
+          <strong>Address</strong>
+          <address class="campus-address">Bhai Mati Dass College of Nursing<br>Village Atta, Canal Road, Goraya<br>Jalandhar, Punjab 144409</address>
+          <a class="campus-map-button" href="https://maps.app.goo.gl/aAQnYnyqNoKvbubM6">Open in Google Maps <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
       <div class="info-item">
         <span class="info-icon">📞</span>
@@ -768,7 +861,7 @@
     <a href="#gallery">Campus</a>
     <a href="#courses">Courses</a>
     <a href="#leadership">Leadership</a>
-    <a href="#notice">Notice Board</a>
+    <a href="#notice">Information Desk</a>
     <a href="#alumni">Alumni</a>
     <a href="#contact">Contact</a>
   </div>
