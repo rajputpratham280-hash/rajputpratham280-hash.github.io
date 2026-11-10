@@ -244,15 +244,19 @@
   .courses-grid > .subsection-header:first-child{border-top:none;margin-top:0;}
 
   /* LEADERSHIP */
-  #leadership{padding:2rem 3rem 5rem;background:linear-gradient(180deg,transparent 0%, rgba(11,31,58,0.5) 50%, transparent 100%);}
-  .leadership-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:3rem;}
-  .leader-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem;}
-  .leader-avatar{width:130px;height:130px;border-radius:50%;border:2px solid var(--gold);background:linear-gradient(135deg,var(--navy),var(--navy-deep));display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;}
-  .leader-avatar img{width:100%;height:100%;object-fit:cover;display:none;}
-  .leader-avatar img.loaded{display:block;}
-  .leader-name{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--cream);font-weight:600;}
-  .leader-role{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);}
-  .leader-bio{font-size:0.86rem;color:var(--muted);line-height:1.8;max-width:300px;}
+  #leadership{padding:1rem 3rem 4rem;scroll-margin-top:5rem;}
+  .leadership-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem;}
+  .leader-card{
+    padding:clamp(1.4rem,3.5vw,2.5rem);border:1px solid rgba(232,200,119,.24);
+    border-radius:14px;background:linear-gradient(145deg,#172a43,#0e1c2e);
+    box-shadow:0 16px 38px rgba(0,0,0,.18);
+  }
+  .leader-card::before{content:'';display:block;width:2.5rem;height:2px;background:var(--gold);margin-bottom:1rem;}
+  .leader-role{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-light);font-weight:700;line-height:1.5;}
+  .leader-name{font-family:'Cinzel',Georgia,serif;font-size:clamp(1.3rem,3vw,1.85rem);color:var(--cream);margin:.45rem 0 .7rem;}
+  .leader-bio{font-size:.9rem;color:#c5ced8;line-height:1.8;}
+  .leader-bio + .leader-bio{margin-top:.7rem;}
+  @media (max-width:700px){.leadership-inner{grid-template-columns:minmax(0,1fr);}}
 
   /* NOTICE BOARD */
   #notice{padding:2rem 3rem 5rem;max-width:1000px;margin:0 auto;}
@@ -264,17 +268,50 @@
   .notice-text strong{color:var(--cream);}
   .notice-hint{text-align:center;margin-top:1rem;font-size:0.78rem;color:var(--muted);font-style:italic;}
 
-  /* ALUMNI */
-  #alumni{padding:2rem 3rem 5rem;background:linear-gradient(180deg,transparent, rgba(11,31,58,0.4), transparent);}
-  .alumni-inner{max-width:1100px;margin:0 auto;}
-  .alumni-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.4rem;margin-top:3rem;}
-  .alumni-card{background:var(--card);border:1px solid rgba(201,162,75,0.14);padding:1.8rem 1.4rem;text-align:center;transition:all .3s;}
-  .alumni-card:hover{border-color:rgba(201,162,75,0.4);transform:translateY(-3px);}
-  .alumni-card .avatar{font-size:2.3rem;margin-bottom:0.9rem;}
-  .alumni-card .name{font-family:'Cinzel',serif;font-size:0.92rem;color:var(--gold);margin-bottom:0.25rem;}
-  .alumni-card .batch{font-size:0.68rem;color:var(--green);letter-spacing:0.1em;}
-  .alumni-card .role{font-size:0.78rem;color:var(--muted);margin-top:0.4rem;}
-  .alumni-hint{text-align:center;margin-top:1.2rem;font-size:0.78rem;color:var(--muted);font-style:italic;}
+  /* ALUMNI BOARD */
+  #alumni{padding:1rem 3rem 5rem;scroll-margin-top:5rem;}
+  .alumni-inner{
+    max-width:1100px;margin:0 auto;overflow:hidden;border:1px solid rgba(232,200,119,.32);
+    border-radius:16px;background:#0d1b2e;box-shadow:0 18px 45px rgba(0,0,0,.3);
+  }
+  .alumni-board-header{
+    display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;
+    padding:.85rem clamp(.85rem,3vw,1.55rem);
+    background:linear-gradient(110deg,#512338,#261f33);border-bottom:1px solid rgba(232,200,119,.28);
+  }
+  .alumni-board-header p{
+    display:flex;align-items:center;gap:.6rem;color:#fae5b0;font-size:.72rem;font-weight:700;
+    letter-spacing:.11em;text-transform:uppercase;
+  }
+  .alumni-board-header p::before{content:'◆';font-size:.6rem;color:var(--gold-light);}
+  .alumni-toggle{
+    padding:.5rem .7rem;border:1px solid #bd9f6a;border-radius:6px;
+    background:#221a28;color:#f8e5ba;font:inherit;font-size:.75rem;cursor:pointer;
+  }
+  .alumni-toggle:hover{background:#3c263a;}
+  .alumni-toggle:focus-visible,.alumni-viewport:focus-visible{outline:2px solid var(--gold-light);outline-offset:-3px;}
+  .alumni-viewport{
+    overflow-x:auto;padding:.9rem 0;background:repeating-linear-gradient(0deg,#081525 0 7px,#0a1728 7px 8px);
+  }
+  .alumni-track{display:flex;width:max-content;}
+  .alumni-list{display:flex;flex:none;gap:.75rem;padding:0 .75rem 0 0;list-style:none;}
+  .alumni-card{
+    width:clamp(200px,52vw,240px);padding:.9rem 1rem 1rem;
+    background:linear-gradient(160deg,#192b42,#101e31);
+    border:1px solid rgba(232,200,119,.26);border-top-color:var(--gold);border-radius:8px;
+  }
+  .alumni-slot{font-size:.65rem;color:var(--gold-light);letter-spacing:.12em;text-transform:uppercase;}
+  .alumni-name{font-family:'Cinzel',Georgia,serif;font-size:.95rem;color:var(--cream);margin:.38rem 0;}
+  .alumni-details{font-size:.76rem;color:#c5ced8;line-height:1.5;}
+  .alumni-list[aria-hidden="true"]{display:none;}
+  @media (prefers-reduced-motion:no-preference){
+    .alumni-inner[data-moving] .alumni-viewport{overflow:clip;}
+    .alumni-inner[data-moving] .alumni-list[aria-hidden="true"]{display:flex;}
+    .alumni-inner[data-moving] .alumni-track{animation:alumni-scroll 78s linear infinite;}
+    .alumni-inner[data-paused] .alumni-track{animation-play-state:paused;}
+  }
+  @media (prefers-reduced-motion:reduce){.alumni-toggle{display:none;}}
+  @keyframes alumni-scroll{to{transform:translateX(-50%);}}
 
   /* CONTACT */
   #contact{padding:2rem 3rem 6rem;}
@@ -592,23 +629,23 @@
 
 <!-- LEADERSHIP -->
 <div class="section-label reveal">
-  <div class="eyebrow">The Guiding Light</div>
-  <h2>Our Leadership</h2>
+  <div class="eyebrow">Institutional &amp; Academic Leadership</div>
+  <h2 id="leadership-title">Our Leadership</h2>
 </div>
-<section id="leadership">
+<section id="leadership" aria-labelledby="leadership-title">
   <div class="leadership-inner">
-    <div class="leader-card reveal">
-      <div class="leader-avatar"><span>🎓</span></div>
-      <div class="leader-name">[Director Name]</div>
-      <div class="leader-role">Director</div>
-      <p class="leader-bio">[Add a short biography of the Director here — background, vision, and role in building the institution.]</p>
-    </div>
-    <div class="leader-card reveal">
-      <div class="leader-avatar"><span>👩‍⚕️</span></div>
-      <div class="leader-name">[Principal Name]</div>
-      <div class="leader-role">Principal</div>
-      <p class="leader-bio">[Add a short biography of the Principal here — academic background, experience, and approach to student mentorship.]</p>
-    </div>
+    <article class="leader-card">
+      <p class="leader-role">Chairman &amp; Managing Director</p>
+      <h3 class="leader-name">Madanjeet Singh</h3>
+      <p class="leader-bio">Madanjeet Singh leads Bhai Mati Dass College with a commitment to quality education and a supportive environment where students can develop confidence, discipline and a sense of purpose.</p>
+      <p class="leader-bio">His vision for the college brings academic learning and hands-on training together, with compassion and service to the community at the heart of healthcare education.</p>
+    </article>
+    <article class="leader-card">
+      <p class="leader-role">Principal · M.Sc. in Nursing</p>
+      <h3 class="leader-name">Mrs. Bindu Bala</h3>
+      <p class="leader-bio">Mrs. Bindu Bala holds an M.Sc. in Nursing and brings many years of nursing experience to her role as Principal. She draws on that experience to help students connect classroom learning with the responsibilities of patient care.</p>
+      <p class="leader-bio">Her academic leadership emphasises clinical competence, professional ethics and student mentorship, helping future nurses develop the judgement and compassion their work demands.</p>
+    </article>
   </div>
 </section>
 
@@ -637,18 +674,33 @@
 
 <!-- ALUMNI -->
 <div class="section-label reveal">
-  <div class="eyebrow">Our Pride</div>
-  <h2>Alumni Board</h2>
+  <div class="eyebrow">The BMD Alumni Network</div>
+  <h2 id="alumni-title">Alumni Board</h2>
+  <p>A space to celebrate the graduates of Bhai Mati Dass College and share where their education has taken them.</p>
 </div>
-<section id="alumni">
+<section id="alumni" aria-labelledby="alumni-title">
   <div class="alumni-inner">
-    <div class="alumni-grid">
-      <div class="alumni-card reveal"><div class="avatar">👩‍⚕️</div><div class="name">[Name]</div><div class="batch">Batch of [Year]</div><div class="role">[Current Role / Workplace]</div></div>
-      <div class="alumni-card reveal"><div class="avatar">👨‍⚕️</div><div class="name">[Name]</div><div class="batch">Batch of [Year]</div><div class="role">[Current Role / Workplace]</div></div>
-      <div class="alumni-card reveal"><div class="avatar">👩‍🔬</div><div class="name">[Name]</div><div class="batch">Batch of [Year]</div><div class="role">[Current Role / Workplace]</div></div>
-      <div class="alumni-card reveal"><div class="avatar">👨‍🔬</div><div class="name">[Name]</div><div class="batch">Batch of [Year]</div><div class="role">[Current Role / Workplace]</div></div>
+    <div class="alumni-board-header">
+      <p>Alumni Spotlight</p>
+      <button class="alumni-toggle" type="button" aria-controls="alumni-board-viewport" hidden>Pause scrolling</button>
     </div>
-    <p class="alumni-hint">.</p>
+    <div class="alumni-viewport" id="alumni-board-viewport" tabindex="0" role="region" aria-label="Alumni profiles">
+      <div class="alumni-track">
+        <!-- ADD ALUMNI HERE: replace a card's title and details with the graduate's name, programme, batch and current role. -->
+        <ul class="alumni-list" aria-label="Alumni spotlight slots">
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 01</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 02</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 03</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 04</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 05</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 06</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 07</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 08</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 09</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+          <li class="alumni-card"><p class="alumni-slot">Spotlight 10</p><h3 class="alumni-name">Profile coming soon</h3><p class="alumni-details">Batch and career details to follow</p></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -888,6 +940,22 @@
           event.clientY < rect.top || event.clientY > rect.bottom) viewer.close();
     });
     viewer.addEventListener('close', () => opener?.focus());
+  })();
+
+  // The second copy makes the signboard loop continuously.
+  (() => {
+    const board = document.querySelector('.alumni-inner');
+    const track = board.querySelector('.alumni-track');
+    const copy = track.firstElementChild.cloneNode(true);
+    const toggle = board.querySelector('.alumni-toggle');
+    copy.setAttribute('aria-hidden', 'true');
+    track.append(copy);
+    board.setAttribute('data-moving', '');
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      const paused = board.toggleAttribute('data-paused');
+      toggle.textContent = paused ? 'Resume scrolling' : 'Pause scrolling';
+    });
   })();
 
   // Hero slide rotation every 10 seconds
